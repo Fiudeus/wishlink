@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Вход</h1>
+<p class="page-subtitle">Войди, чтобы управлять своими вишлистами.</p>
+
+<div class="card">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Войти</button>
+        <a href="{% url 'register' %}" class="button button-secondary">Регистрация</a>
+    </form>
+</div>
+{% endblock %}

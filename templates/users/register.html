@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Регистрация</h1>
+<p class="page-subtitle">Создай аккаунт, чтобы начать собирать свои списки желаний.</p>
+
+<div class="card">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Зарегистрироваться</button>
+        <a href="{% url 'login' %}" class="button button-secondary">Уже есть аккаунт</a>
+    </form>
+</div>
+{% endblock %}
