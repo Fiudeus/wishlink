@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    container_name: wishlink_web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    container_name: wishlink_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: wishlink
+      POSTGRES_USER: wishlink_user
+      POSTGRES_PASSWORD: wishlink_password
+
+
+volumes:
+  postgres_data:
