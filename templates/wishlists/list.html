@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Мои вишлисты</h1>
+<p class="page-subtitle">Создавай списки желаний и управляй доступом к ним.</p>
+
+<div class="actions">
+    <a href="{% url 'wishlist_create' %}" class="button">Создать вишлист</a>
+</div>
+
+{% if wishlists %}
+    <div class="grid">
+        {% for wishlist in wishlists %}
+            <a href="{% url 'wishlist_detail' wishlist.pk %}" class="card wishlist-card">
+                <div>
+                    {% if wishlist.is_public %}
+                        <span class="badge badge-public">Публичный</span>
+                    {% else %}
+                        <span class="badge badge-private">Приватный</span>
+                    {% endif %}
+                </div>
+
+                <h2 class="wishlist-title">{{ wishlist.title }}</h2>
+
+                {% if wishlist.description %}
+                    <p class="wishlist-description">{{ wishlist.description }}</p>
+                {% else %}
+                    <p class="wishlist-description">Описание пока не добавлено.</p>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card empty-state">
+        <h2>Пока нет вишлистов</h2>
+        <p>Создай первый список желаний для демонстрации проекта.</p>
+        <a href="{% url 'wishlist_create' %}" class="button">Создать первый вишлист</a>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Создать вишлист</h1>
+<p class="page-subtitle">Настрой название, описание и базовую приватность списка.</p>
+
+<div class="card">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Сохранить</button>
+        <a href="{% url 'wishlist_list' %}" class="button button-secondary">Назад</a>
+    </form>
+</div>
+{% endblock %}

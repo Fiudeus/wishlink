@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="page-title">Добавить предмет</h1>
+<p class="page-subtitle">Вишлист: {{ wishlist.title }}</p>
+
+<div class="card">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Добавить</button>
+        <a href="{% url 'wishlist_detail' wishlist.pk %}" class="button button-secondary">Назад</a>
+    </form>
+</div>
+{% endblock %}

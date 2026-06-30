@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="detail-header">
+    <div>
+        <h1 class="page-title">{{ wishlist.title }}</h1>
+
+        {% if wishlist.description %}
+            <p class="page-subtitle">{{ wishlist.description }}</p>
+        {% else %}
+            <p class="page-subtitle">Описание пока не добавлено.</p>
+        {% endif %}
+
+        {% if wishlist.is_public %}
+            <span class="badge badge-public">Публичный</span>
+        {% else %}
+            <span class="badge badge-private">Приватный</span>
+        {% endif %}
+    </div>
+
+    {% if wishlist.owner == user %}
+        <a href="{% url 'wishlist_item_create' wishlist.pk %}" class="button">Добавить предмет</a>
+    {% endif %}
+</section>
+
+<div class="card">
+    <h2>Настройки доступа</h2>
+    <p class="wishlist-description">
+        Доступ по типам отношений:
+        {% if wishlist.allowed_relation_types %}
+            {{ wishlist.allowed_relation_types }}
+        {% else %}
+            не задан
+        {% endif %}
+    </p>
+</div>
+
+<br>
+
+<h2>Предметы</h2>
+
+{% if wishlist.items.all %}
+    <ul class="item-list">
+        {% for item in wishlist.items.all %}
+            <li class="card item-card">
+                {% if item.display_image %}
+                    <img src="{{ item.display_image }}" class="item-image" alt="{{ item.name }}">
+                {% else %}
+                    <div class="item-image"></div>
+                {% endif %}
+
+                <div>
+                    <h3 class="item-name">{{ item.name }}</h3>
+
+                    {% if item.description %}
+                        <p class="item-description">{{ item.description }}</p>
+                    {% else %}
+                        <p class="item-description">Описание не добавлено.</p>
+                    {% endif %}
+
+                    {% if item.image_warning %}
+                        <p class="warning">{{ item.image_warning }}</p>
+                    {% endif %}
+
+                    {% if item.product_url %}
+                        <a href="{{ item.product_url }}" target="_blank" class="button button-secondary">
+                            Открыть товар
+                        </a>
+                    {% endif %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="card empty-state">
+        <h2>Предметов пока нет</h2>
+        <p>Добавь первый предмет, чтобы список выглядел наполненным.</p>
+
+        {% if wishlist.owner == user %}
+            <a href="{% url 'wishlist_item_create' wishlist.pk %}" class="button">Добавить предмет</a>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}
